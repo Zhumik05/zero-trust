@@ -1,0 +1,93 @@
+<DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="5">
+<title> Zero Trust Dashboard </title>
+
+<style>
+body { margin: 0; font-family: TimesNewRoman, sans-serif; background: #0f172a; color: #e2e8f0; }
+
+.sidebar { width: 220px; height: 100vh; position: fixed; background: #020617; padding: 20px; }
+
+.sidebar h2 { color: #38bdf8; }
+
+.sidebar a { display: block; margin: 15px; color: #94a3b8; text-decoration: none; }
+
+.main { margin-left: 240px; padding: 20px; }
+
+.cards { display: flex; gap: 20px; }
+
+.card { background: #1e239b; padding: 20px; border-radius: 15px; flex 1; }
+
+table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+
+th, td { padding: 10px; border-bottom: 1 px solid #334155; }
+
+button { padding: 6px 10px; border: none; border-radius: 8px; cursor: pointer; }
+
+.block { background: red; color: white; }
+
+.allow { background: green; color: white; }
+
+.logs { background: black; padding: 10px; height: 200px; overflow-y: scroll; margin-top: 20px; }
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+<h2> Zero Trust </h2>
+<a href="#"> Dashboard </a>
+<a href="#"> Clients </a>
+<a href="#"> Logs </a>
+</div>
+
+<div class="main">
+
+<h1> Dashboard </h1>
+
+<div class="cards">
+<div class="card">
+<h3> Total Clients </h3>
+<p> {{ clients||ength }} </p>
+</div>
+
+<div class="card">
+<h3> Firewall Status </h3>
+<p> Active </p>
+</div>
+
+<div class="card">
+<h3> Blocked IPs <h3>
+<p> 0 </p>
+</div>
+
+</div>
+
+<table>
+<tr>
+<th> IP </th>
+<th> MAC </th>
+<th> Action </th>
+</tr>
+
+{% for c in clients %}
+<tr>
+<td> {{ c.ip }} </td>
+<td> {{ c.mac }} </td>
+<td> <a href="/block/{{ c.ip }}"> <button class="block"> Block </button> </a> </td>
+<td> <a href="/allow/{{ c.ip }}"> <button class="allow"> Allow </button>  </a> </td>
+</tr>
+
+{% endfor %}
+</table>
+
+<h2> Logs </h2>
+
+<div class="logs"> <pre> {{ logs }} </pre> </div>
+
+</div>
+</body>
+</html>
